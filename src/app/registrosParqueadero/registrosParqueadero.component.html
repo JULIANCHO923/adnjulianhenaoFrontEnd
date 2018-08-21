@@ -1,0 +1,144 @@
+
+<!-- Autos en el Parqueadero -->
+<div class="row"> 
+    <div class="container">
+        <h2> <fa-icon [icon]="['fas', 'car-side']" size="2x" ></fa-icon> Automoviles </h2>
+        <h3> Espacios Disponibles: {{(espacioAutos.limiteEspacio - espacioAutos.espacioActual)}}  Limite: {{espacioAutos.limiteEspacio}} </h3>
+        <div class="table-responsive-sm">
+            <table class="table">
+                <thead>
+                    <tr>                                
+                        <th scope="col">Placa</th>
+                        <th scope="col">Cilindraje</th>
+                        <th scope="col">Fecha Entrada</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>                                
+                    <ng-container *ngFor="let registro of registrosAutos  | paginate: { id: 'id1', itemsPerPage: 2, currentPage: p1 }" >          
+                        <tr>
+                            <th scope="row">{{registro.vehiculo.placa}}</th>
+                            <td> {{registro.vehiculo.cilindraje}} </td>
+                            <td> {{registro.fechaEntrada}} </td>
+                            <td> 
+                                <button [id]="registro.id" class="btn btn-outline-info float-md-right" (click)="openModal(template, registro.id, registro.vehiculo.placa)"> 
+                                    Salida
+                                </button>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table> 
+            <pagination-controls id="id1" class="pagination justify-content-center" (pageChange)="p1 = $event"  previousLabel="" nextLabel="" ></pagination-controls>           
+        </div>
+    </div>     
+</div>
+    
+    
+<!-- Motos en el parqueadero -->
+<div class="row"> 
+    <div class="container">
+        <h2> <fa-icon [icon]="['fas', 'motorcycle']" size="2x" ></fa-icon> Motos</h2>
+        <h3> Espacios Disponibles: {{(espacioMotos.limiteEspacio - espacioMotos.espacioActual)}}  Limite: {{(espacioMotos.limiteEspacio)}} </h3>
+      <div class="table-responsive-sm"> 
+            <table class="table">
+                <thead>
+                    <tr>                                
+                        <th scope="col">Placa</th>
+                        <th scope="col">Cilindraje</th>
+                        <th scope="col">Fecha Entrada</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>                                           
+                    <ng-container *ngFor="let registro2 of registrosMotos  | paginate: { id:'id2', itemsPerPage: 2, currentPage: p2 }; let i = index" >                              
+                        <tr>
+                            <th scope="row">{{registro2.vehiculo.placa}}</th>
+                            <td> {{registro2.vehiculo.cilindraje}} </td>
+                            <td> {{registro2.fechaEntrada}} </td>
+                            <td> 
+                                <button [id]="registro2.id" class="btn btn-outline-info float-md-right" (click)="openModal(template, registro2.id, registro2.vehiculo.placa)"> 
+                                    Salida
+                                </button>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+            <pagination-controls id="id2" class="pagination justify-content-center" (pageChange)="p2 = $event" responsive="true"  previousLabel="" nextLabel="" ></pagination-controls>
+        </div>             
+    </div>     
+</div>
+
+<!-- Vehiculos Registrados Anteriormente -->
+<div class="row">
+    <div class="container">
+        <h2> Vehiculos Registros Anteriormente </h2>
+       <div class="table-responsive-sm">
+           <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Factura</th> 
+                        <th scope="col">Vehiculo</th>                                
+                        <th scope="col">Placa</th>
+                        <th scope="col">Cilindraje</th>
+                        <th scope="col">Fecha Entrada</th>
+                        <th scope="col">Fecha Salida</th>
+                        <th scope="col">Registrado</th>
+                        <th scope="col">Días</th>
+                        <th scope="col">Horas</th>
+                        <th scope="col">Total</th>
+                    </tr>
+                </thead>
+                <tbody>                            
+                    <ng-container *ngFor="let registro3 of registrosAnteriores | paginate: { id: 'id3', itemsPerPage: 10, currentPage: p3 }; let i = index" >          
+                        <tr>
+                            <th scope="row">{{registro3.id}}</th>
+                            <th scope="row">{{registro3.vehiculo.tipoVehiculo.descripcion}}</th>
+                            <th scope="row">{{registro3.vehiculo.placa}}</th>
+                            <td> {{registro3.vehiculo.cilindraje}} </td>
+                            <td> {{registro3.fechaEntrada}} </td>
+                            <td> {{registro3.fechaSalida}} </td>
+                            <td> {{registro3.horasParqueo}} horas </td>
+                            <td> {{registro3.diasParqueadero}} </td>
+                            <td> {{registro3.horasParqueadero}} </td>
+                            <th scope="row"> {{registro3.costoTotal}} </th>
+                        </tr>
+                    </ng-container>                
+                </tbody>
+            </table>
+            <pagination-controls id="id3" class="pagination justify-content-center" (pageChange)="p3 = $event" responsive="true"  previousLabel="" nextLabel="" ></pagination-controls>
+         </div>          
+     </div>     
+</div> 
+
+<!-- Modal Vehiculos  -->
+<ng-template #template>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Efectuar Salida del Vehiculo</h4>
+         <!--   <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                <span aria-hidden="true">&times;</span>
+            </button> -->
+    </div>
+    <div class="modal-body">
+        ¿Desea facturar la salida del vehiculo con placa {{placaModal}} ?
+    </div>
+    <div class="modal-footer">
+       <!-- <button (click)="modalRef.hide()" type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button> -->
+        <a (click)="salidaVehiculo(template2, idModal,placaModal)"  type="button" class="btn btn-outline-primary">Facturar</a>
+    </div>
+</ng-template>
+
+
+<!-- Modal Vehiculos  -->
+<ng-template #template2>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Generando Factura del Vehiculo</h4>
+    </div>
+    <div class="modal-body">
+        Se esta generando la factura con id: {{idModal}} para el vehiculo con placa {{placaModal}}
+    </div>
+    <div class="modal-footer">
+        <a (click)="irAFactura(idModal)"  type="button" class="btn btn-outline-primary">Ver factura</a>
+    </div>
+</ng-template>

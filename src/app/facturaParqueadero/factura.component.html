@@ -1,0 +1,46 @@
+<!-- Modal factura -->
+
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Efectuar Salida del Vehiculo</h4>
+    </div>
+    <div class="modal-body">
+            <div class="container">
+    
+                    <div *ngIf="info" class="alert alert-info" role="alert">
+                        {{info}}
+                    </div>
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-dark">Factura {{registroActual.id}} </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{registroActual.vehiculo.tipoVehiculo.descripcion}}   Placa: {{registroActual.vehiculo.placa}}
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Fecha Entrada:
+                        <span class="badge badge-primary badge-pill">{{registroActual.fechaEntrada}}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Fecha Salida:
+                        <span class="badge badge-primary badge-pill">{{registroActual.fechaSalida}}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Duración en el parqueadero:
+                        <span class="badge badge-primary badge-pill">{{registroActual.horasParqueo}}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Días:
+                            <span class="badge badge-primary badge-pill">{{registroActual.diasParqueadero}}</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Horas:
+                                <span class="badge badge-primary badge-pill">{{registroActual.horasParqueadero}}</span>
+                                        </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                Costo Total:
+                                <span class="badge badge-primary badge-pill">{{registroActual.costoTotal}}</span>
+                                </li>
+                    </ul>
+                </div>
+    </div>
+    <div class="modal-footer">
+        <button (click)="modalRef.hide()" routerLink="/registrosParqueadero" type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+    </div>

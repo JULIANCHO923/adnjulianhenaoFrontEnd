@@ -1,0 +1,88 @@
+
+<div class="container">
+   <!--
+    <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a routerLink="/vehiculos">Vehiculo</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Crear Vehiculos</li>
+            </ol>
+     </nav>
+     
+      [(ngModel)] = "vehiculo.tipoVehiculo.id"
+       [(ngModel)] = "vehiculo.cilindraje"
+        
+    -->
+
+    
+
+     <form class="form-horizontal" [formGroup]="form">
+    
+    <!-- <h2> La Trm {{trm}} </h2> -->
+    
+      <h3>Ingresar datos del Vehiculo</h3>
+
+      <div *ngIf="exito" class="alert alert-success" role="alert">
+          {{exito}}
+        </div>
+
+      <div *ngIf="fracaso" class="alert alert-danger" role="alert">
+          {{fracaso}}
+      </div>  
+
+            <div class="form-group">
+              <div class="col-sm-12">
+                <label for="placa" class="control-label required">Placa</label>
+                <input type="text" name="placa" id="placa" class="form-control" formControlName="placa">
+                <app-campoError 
+                  [displayError]="isFieldValid('placa')" 
+                  errorMsg="Por favor ingrese la placa. Solo letras y números [a-z,A-Z,0-9]">
+                </app-campoError>
+              </div>
+            </div>
+          
+            <div class="form-group" >
+              <div class="col-sm-12">
+                <label for="TipoVehiculo" class="control-label required">Tipo Vehiculo</label>
+                <select #t (change)="SelectedChangeValue(t.value)" name="tipoVehiculo"  id="tipoVehiculo" class="form-control" formControlName="tipoVehiculo" >
+                        <ng-container *ngFor="let tipoVehiculo of tipoVehiculos"> 
+                                <option value = "{{tipoVehiculo.id}}" >  {{tipoVehiculo.descripcion}}
+                                </option>
+                        </ng-container>
+                      </select>
+
+                <app-campoError 
+                  [displayError]="isFieldValid('tipoVehiculo')" 
+                  errorMsg="Seleccione un tipo de Vehiculo">
+                </app-campoError>
+              </div>
+            </div>
+          
+            <div *ngIf="showHide" class="form-group" >
+              
+                <div class="col-md-6">
+                  <label for="cilindraje" class="control-label required">Cilindraje</label>
+                  <input  type="number" name="cilindraje" id="cilindraje" class="form-control"  formControlName="cilindraje" >
+                  <app-campoError
+                    [displayError]="isFieldValid('cilindraje')" 
+                    errorMsg="Por favor ingrese un cilindraje mayor a cero para la moto">
+                </app-campoError>
+                </div>
+              
+            </div>
+            
+            
+            <button class="btn  btn-outline-primary float-md-right" (click)="onSubmit()">Enviar</button>
+            <button class="btn  btn-outline-dark float-md-right" (click)="reset()">Limpiar</button>
+          
+          </form>       
+<!--    
+<button type="button" class="btn btn-outline-primary">Primary</button>
+<button type="button" class="btn btn-outline-secondary">Secondary</button>
+<button type="button" class="btn btn-outline-success">Success</button>
+<button type="button" class="btn btn-outline-danger">Danger</button>
+<button type="button" class="btn btn-outline-warning">Warning</button>
+<button type="button" class="btn btn-outline-info">Info</button>
+<button type="button" class="btn btn-outline-light">Light</button>
+<button type="button" class="btn btn-outline-dark">Dark</button>
+-->
+</div>
