@@ -73,6 +73,7 @@ showHide:boolean = false;
       this.vehiculosService.guardarVehiculo(this.vehiculo).subscribe((res) => { 
        
       }, error => {
+        console.log(error);
         if(error.status == CREATED){
           this.exito = error.error.text;
           this.form.reset();
